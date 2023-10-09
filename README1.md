@@ -1,7 +1,6 @@
 # README
 
 Welcome to [RedwoodJS](https://redwoodjs.com)!
-Hi!
 
 > **Prerequisites**
 >
