@@ -9,10 +9,41 @@ generator client {
 }
 
 // Define your own datamodels here and run `yarn redwood prisma migrate dev`
-// to create migrations for them and apply to your dev DB.
-// TODO: Please remove the following example:
-model UserExample {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+// TODO:  model User: Check on password hashing
+//        model codeProject: Check on the parameter for content type
+// Roles: User=all users;
+//        Owner=First user on a project;
+//        Colab=All other users on a project;
+//        Admin=All users on a project;  DO WE NEED ANADMIN ROLE?
+
+model User {
+  id        Int           @id @default(autoincrement())
+  username  String        @unique
+  password  String
+  email     String        @unique
+  projects  CodeProject[] @relation("owner")
+  colabDocs CodeDoc[]     @relation("colabs")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model Project {
+  id        Int       @id @default(autoincrement())
+  title     String
+  ownerID   Int
+  owner     User      @relation("owner", fields: [ownerID], references: [id])
+  codeDocs  CodeDoc[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model codeDoc {
+  id        Int      @id @default(autoincrement())
+  filename  String
+  content   String
+  projectId Int
+  project   Project  @relation(fields: [projectId], references: [id])
+  colabs    User[]   @relation("colabs")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
