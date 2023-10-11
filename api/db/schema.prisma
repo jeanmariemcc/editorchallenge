@@ -17,14 +17,14 @@ generator client {
 //        Admin=All users on a project;  DO WE NEED ADMIN ROLE?
 
 model User {
-  id        Int           @id @default(autoincrement())
-  username  String        @unique
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
   password  String
-  email     String        @unique
-  projects  CodeProject[] @relation("owner")
-  colabDocs CodeDoc[]     @relation("colabs")
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  email     String    @unique
+  projects  Project[] @relation("owner")
+  colabDocs codeDoc[] @relation("colabs")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Project {
@@ -40,11 +40,21 @@ model Project {
 model codeDoc {
   id        Int      @id @default(autoincrement())
   filename  String
+  language  String
   content   String
   projectId Int
   project   Project  @relation(fields: [projectId], references: [id])
   colabs    User[]   @relation("colabs")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  version   Int      @version(autoincrement())
+  version   DateTime @default(now())
+}
+
+model docVersion {
+  id        Int      @id @default(autoincrement())
+  content   String
+  language  String
+  codeDocId Int
+  codeDoc   codeDoc  @relation(fields: [codeDocId], references: [id])
+  createdAt DateTime @default(now())
 }
