@@ -14,7 +14,7 @@ generator client {
 // Roles: User=all users;
 //        Owner=First user on a project;
 //        Colab=All other users on a project;
-//        Admin=All users on a project;  DO WE NEED ANADMIN ROLE?
+//        Admin=All users on a project;  DO WE NEED ADMIN ROLE?
 
 model User {
   id        Int           @id @default(autoincrement())
@@ -46,4 +46,5 @@ model codeDoc {
   colabs    User[]   @relation("colabs")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  version   Int      @version(autoincrement())
 }
