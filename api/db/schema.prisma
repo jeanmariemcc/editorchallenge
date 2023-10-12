@@ -15,11 +15,12 @@ generator client {
 //        Owner=First user on a project;
 //        Colab=All other users on a project;
 //        Admin=All users on a project;  DO WE NEED ADMIN ROLE?
+// Languages: JavaScript, TypeScript, Python, Ruby, Java, C, C++, C#, Go, Rust, PHP, Swift, Kotlin, Scala, Haskell, Clojure, Elixir, Lua, R, Dart, SQL, HTML, CSS, Markdown, YAML, JSON, TOML, XML, Plain Text
 
 model User {
   id        Int       @id @default(autoincrement())
   username  String    @unique
-  password  String
+  password  String //RW should have some password hashing functionality - check this
   email     String    @unique
   projects  Project[] @relation("owner")
   colabDocs codeDoc[] @relation("colabs")
@@ -32,22 +33,22 @@ model Project {
   title     String
   ownerID   Int
   owner     User      @relation("owner", fields: [ownerID], references: [id])
-  codeDocs  CodeDoc[]
+  codeDocs  codeDoc[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
 
 model codeDoc {
-  id        Int      @id @default(autoincrement())
-  filename  String
-  language  String
-  content   String
-  projectId Int
-  project   Project  @relation(fields: [projectId], references: [id])
-  colabs    User[]   @relation("colabs")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  version   DateTime @default(now())
+  id         Int          @id @default(autoincrement())
+  filename   String
+  language   String
+  content    String
+  projectId  Int
+  project    Project      @relation(fields: [projectId], references: [id])
+  colabs     User[]       @relation("colabs")
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  docVersion docVersion[]
 }
 
 model docVersion {
