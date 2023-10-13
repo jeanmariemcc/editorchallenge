@@ -1,3 +1,5 @@
+import MonacoEditor from 'monaco-editor'
+
 import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web'
 import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 
