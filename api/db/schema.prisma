@@ -1,3 +1,8 @@
+// Relational Database
+// Users are all collaborators, but only one user is the owner of a project<
+// Project Owner is toggled on or off using a Boolean switch
+// Docs belong to a project, and versions are kept automatically
+
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -8,11 +13,65 @@ generator client {
   binaryTargets = "native"
 }
 
-// Define your own datamodels here and run `yarn redwood prisma migrate dev`
-// to create migrations for them and apply to your dev DB.
-// TODO: Please remove the following example:
-model UserExample {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+//  this schema uses an explicit many-to-many relationship between projects,
+//  and users to allow for multiple users on multiple projects
+
+model User {
+  id          Int         @id @default(autoincrement())
+  username    String      @unique
+  password    String      //RW should have some password hashing functionality - check this
+  email       String      @unique
+  profile     Profile?
+  projects    ProjectUser[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }
+
+model Profile {
+  id          Int         @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  userId      Int         @unique
+  user        User        @relation(fields: [userId], references: [id])
+}
+
+model Project {
+  id          Int         @id @default(autoincrement())
+  title       String
+  users       ProjectUser[]
+  codeDocs    CodeDoc[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model CodeDoc {
+  id         Int          @id @default(autoincrement())
+  filename   String
+  language   String
+  content    String
+  projectId  Int
+  project    Project      @relation(fields: [projectId], references: [id])
+  docVersion docVersion[]
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+model docVersion {
+  id        Int           @id @default(autoincrement())
+  codeDocId Int
+  codeDoc   CodeDoc       @relation(fields: [codeDocId], references: [id])
+  createdAt DateTime      @default(now())
+}
+
+model ProjectUser {
+  projectId Int
+  project   Project       @relation(fields: [projectId], references: [id])
+  userId    Int
+  user      User          @relation(fields: [userId], references: [id])
+  owner     Boolean       @default(false)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@id([projectId, userId])
+}
+
