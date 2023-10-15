@@ -5,7 +5,7 @@
 
 datasource db {
   provider = "sqlite"
-  url      = env("dev.dbL")
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -39,28 +39,28 @@ model Project {
   id          Int         @id @default(autoincrement())
   title       String
   users       ProjectUser[]
-  codeDocs    CodeDoc[]
+  projFiles   ProjFile[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }
 
-model CodeDoc {
+model ProjFile {
   id         Int          @id @default(autoincrement())
   filename   String
   language   String
   content    String
   projectId  Int
   project    Project      @relation(fields: [projectId], references: [id])
-  docVersion docVersion[]
+  docVersion DocVersion[]
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
 }
 
-model docVersion {
-  id        Int           @id @default(autoincrement())
-  codeDocId Int
-  codeDoc   CodeDoc       @relation(fields: [codeDocId], references: [id])
-  createdAt DateTime      @default(now())
+model DocVersion {
+  id           Int           @id @default(autoincrement())
+  projFileId   Int
+  projFile     ProjFile      @relation(fields: [projFileId], references: [id])
+  createdAt    DateTime      @default(now())
 }
 
 model ProjectUser {
@@ -74,4 +74,3 @@ model ProjectUser {
 
   @@id([projectId, userId])
 }
-

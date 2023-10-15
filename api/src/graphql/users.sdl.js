@@ -5,7 +5,7 @@ export const schema = gql`
     password: String!
     email: String!
     projects: [Project]!
-    colabDocs: [codeDoc]!
+    projFiless: [ProjFile]!
     createdAt: DateTime!
     updatedAt: DateTime!
   }

@@ -4,7 +4,7 @@ export const schema = gql`
     title: String!
     ownerID: Int!
     owner: User!
-    codeDocs: [codeDoc]!
+    projFiles: [ProjFile]!
     createdAt: DateTime!
     updatedAt: DateTime!
   }
