@@ -1,20 +1,23 @@
-import { Link, routes } from '@redwoodjs/router'
-import { MetaTags } from '@redwoodjs/web'
+// web/src/pages/EditorPage.js
+
+import React from 'react'
+
+import Editor from 'src/components/Editor'
+// import { Loading, Empty, Failure, Success } from 'src/components/EditorCell'
+// import { EditorCell } from 'src/components/EditorCell'
 
 const EditorPage = () => {
   return (
-    <>
-      <MetaTags title="Editor" description="Editor page" />
-
-      <h1>EditorPage</h1>
-      <p>
-        Find me in <code>./web/src/pages/EditorPage/EditorPage.jsx</code>
-      </p>
-      <p>
-        My default route is named <code>editor</code>, link to me with `
-        <Link to={routes.editor()}>Editor</Link>`
-      </p>
-    </>
+    <div>
+      <h1>Editor Page</h1>
+      <Editor />
+      {/* <EditorCell>
+        <Loading />
+        <Empty />
+        <Failure />
+        <Success />
+      </EditorCell> */}
+    </div>
   )
 }
 
