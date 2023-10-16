@@ -20435,6 +20435,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:web"
   dependencies:
+    "@monaco-editor/react": ^4.6.0
     "@redwoodjs/auth-dbauth-web": 6.3.2
     "@redwoodjs/forms": 6.3.2
     "@redwoodjs/router": 6.3.2
