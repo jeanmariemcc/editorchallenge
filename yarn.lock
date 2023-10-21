@@ -17723,6 +17723,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
+    "@monaco-editor/react": ^4.6.0
     "@redwoodjs/core": 6.3.2
     monaco-editor: ^0.44.0
     y-monaco: ^0.1.4
