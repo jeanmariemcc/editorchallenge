@@ -6,5 +6,7 @@ Using this to track changes, keep pertinent info, etc.
 - Ran git merge master to pull same master files as JeanMarie has in her project
 - Renamed editorback-v2 to reflect that it is not usable and has no changes in it;
 
-20 Oct 2023: Recloned full repo and ran yarn, then merged with master to confirm that back and front
+20 Oct 2023:
+- Recloned full repo and ran yarn, then merged with master to confirm that back and front
 ends are using the same files and getting the same pages; Editor is running, ready to connect Auth;
+- Migrated updates to User for Auth; updated Routes.tsx with <Private> tags
